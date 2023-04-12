@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "btaU+18JIaK+PvHt2DvQB4Jx1UpgbtiNcMWlrj9s9wI=",
+  "Source": "FirstApii",
+  "BasePath": "_content/FirstApii",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "FirstApii\\wwwroot",
+      "Source": "FirstApii",
+      "ContentRoot": "C:\\Users\\Leman\\OneDrive\\Desktop\\FirstApii\\FirstApii\\wwwroot\\",
+      "BasePath": "_content/FirstApii",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Leman\\OneDrive\\Desktop\\FirstApii\\FirstApii\\wwwroot\\img\\category.jpg",
+      "SourceId": "FirstApii",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Leman\\OneDrive\\Desktop\\FirstApii\\FirstApii\\wwwroot\\",
+      "BasePath": "_content/FirstApii",
+      "RelativePath": "img/category.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\category.jpg"
+    }
+  ]
+}
