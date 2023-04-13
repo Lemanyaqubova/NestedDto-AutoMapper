@@ -20,7 +20,7 @@ namespace FirstApii.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll(int page,string? search)
+        public IActionResult GetAll(int page,string?  search)
         {
             var query = _appDbContext.Products
                 .Where(p => !p.IsDelete);
@@ -70,6 +70,14 @@ namespace FirstApii.Controllers
                  .Where(p => !p.IsDelete)
                  .FirstOrDefault(p => p.Id == id);
             if (product == null) return StatusCode(StatusCodes.Status404NotFound);
+        
+
+            return Ok(MapToProductReturnDto(product));
+            //return StatusCode(200, products[0]);
+        }
+
+        private static ProductReturnDto MapToProductReturnDto(Product product)
+        {
             ProductReturnDto productReturnDto = new()
             {
                 Name = product.Name,
@@ -82,12 +90,11 @@ namespace FirstApii.Controllers
                     Id = product.CategoryId,
                     Name = product.Category.Name
                 }
-              
-            };
 
-            return Ok(productReturnDto);
-            //return StatusCode(200, products[0]);
+            };
+            return productReturnDto;
         }
+      
         [HttpPost]
         public IActionResult AddProduct(ProductCreateDto productCreateDto)
         {

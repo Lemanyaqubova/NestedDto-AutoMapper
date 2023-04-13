@@ -1,4 +1,5 @@
-﻿using FirstApii.Data.DAL;
+﻿using AutoMapper;
+using FirstApii.Data.DAL;
 using FirstApii.Dtos.CategoryDtos;
 using FirstApii.Dtos.ProductDtos;
 using FirstApii.Extentions;
@@ -15,11 +16,13 @@ namespace FirstApii.Controllers
     {
         private readonly AppDbContext _appDbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IMapper _mapper;
 
-        public CategoryController(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
+        public CategoryController(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment, IMapper mapper)
         {
             _appDbContext = appDbContext;
             this._webHostEnvironment = webHostEnvironment;
+            _mapper = mapper;
         }
         [HttpGet("{id}")]
         public IActionResult GetOne(int id)
@@ -29,12 +32,13 @@ namespace FirstApii.Controllers
                  .FirstOrDefault(c => c.Id == id);
          
             if (category == null) return StatusCode(StatusCodes.Status404NotFound);
-            CategoryReturnDto categoryReturnDto = new();
-            categoryReturnDto.Name = category.Name;
-            categoryReturnDto.Desc = category.Desc;
-            categoryReturnDto.ImageUrl= "https://localhost:7110/img/" + category.ImageUrl;
-            categoryReturnDto.UpdateDate = category.UpdateDate;
-            categoryReturnDto.CreateDate = category.CreateDate;
+            CategoryReturnDto categoryReturnDto= _mapper.Map<CategoryReturnDto>(category);
+            //CategoryReturnDto categoryReturnDto = new();
+            //categoryReturnDto.Name = category.Name;
+            //categoryReturnDto.Desc = category.Desc;
+            //categoryReturnDto.ImageUrl= "https://localhost:7110/img/" + category.ImageUrl;
+            //categoryReturnDto.UpdateDate = category.UpdateDate;
+            //categoryReturnDto.CreateDate = category.CreateDate;
             return Ok(category);
         }
         [HttpGet]
