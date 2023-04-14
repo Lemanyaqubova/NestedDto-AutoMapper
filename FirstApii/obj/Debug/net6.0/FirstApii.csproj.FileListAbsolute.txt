@@ -66,3 +66,6 @@ C:\Users\Leman\OneDrive\Desktop\FirstApii\FirstApii\obj\Debug\net6.0\refint\Firs
 C:\Users\Leman\OneDrive\Desktop\FirstApii\FirstApii\obj\Debug\net6.0\FirstApii.pdb
 C:\Users\Leman\OneDrive\Desktop\FirstApii\FirstApii\obj\Debug\net6.0\FirstApii.genruntimeconfig.cache
 C:\Users\Leman\OneDrive\Desktop\FirstApii\FirstApii\obj\Debug\net6.0\ref\FirstApii.dll
+C:\Users\Leman\OneDrive\Desktop\FirstApii\FirstApii\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Leman\OneDrive\Desktop\FirstApii\FirstApii\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Leman\OneDrive\Desktop\FirstApii\FirstApii\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

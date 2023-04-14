@@ -1,10 +1,11 @@
 ﻿using FirstApii.Data.Configurations;
 using FirstApii.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FirstApii.Data.DAL
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -20,5 +21,5 @@ namespace FirstApii.Data.DAL
 
             base.OnModelCreating(modelBuilder);
         }
-    }
+    } 
 }
