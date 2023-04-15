@@ -1,4 +1,5 @@
-﻿using FirstApii.Data.DAL;
+﻿using AutoMapper;
+using FirstApii.Data.DAL;
 using FirstApii.Dtos.ProductDtos;
 using FirstApii.Models;
 using Microsoft.AspNetCore.Http;
@@ -13,10 +14,12 @@ namespace FirstApii.Controllers
     public class ProductController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public ProductController(AppDbContext appDbContext)
+        public ProductController(AppDbContext appDbContext, IMapper mapper = null)
         {
             _appDbContext = appDbContext;
+            _mapper = mapper;
         }
 
         [HttpGet]

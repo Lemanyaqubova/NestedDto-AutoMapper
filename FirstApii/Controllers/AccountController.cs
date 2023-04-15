@@ -3,6 +3,10 @@ using FirstApii.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace FirstApii.Controllers
 {
@@ -12,11 +16,13 @@ namespace FirstApii.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
+        public AccountController(RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager, IConfiguration configuration)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _configuration = configuration;
         }
         [HttpGet]
         public async Task<IActionResult> CreateRole()
@@ -45,10 +51,37 @@ namespace FirstApii.Controllers
             return StatusCode(201); 
         }
         [HttpPost("login")]
-        public IActionResult Login(LoginDto loginDto)
+        public async Task<IActionResult> Login(LoginDto loginDto)
         {
+            var user=await _userManager.FindByNameAsync(loginDto.UserName);
+            if (user == null) return NotFound();
+            if (!await _userManager.CheckPasswordAsync(user,loginDto.Password)) return NotFound();
 
-            return Ok(new {token=""});
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"]);
+            var claimList = new List<Claim>
+      {
+             new Claim(ClaimTypes.Name,user.UserName),
+             new Claim(ClaimTypes.NameIdentifier,user.Id),
+             new Claim("Fullname",user.FullName),
+
+      };
+            var roles =await _userManager.GetRolesAsync(user);
+            foreach (var item in roles)
+            {
+                claimList.Add(new Claim("role", item));
+            }
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Audience = _configuration["Jwt:Audience"],
+                Issuer= _configuration["Jwt:Issuer"], 
+                Subject = new ClaimsIdentity(claimList),
+                Expires = DateTime.UtcNow.AddMinutes(2),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return Ok(new {token = tokenHandler.WriteToken(token) });
         }
     }
 
